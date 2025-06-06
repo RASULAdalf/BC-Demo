@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BC-Demo</title>
+</head>
+<link rel="stylesheet" href="index.css">
+<body>
+<div>
+    <label for="id_text1"></label><textarea name="text" id="id_text1" cols="85" rows="40" onkeypress="get_text()"></textarea>
+
+</div>
+<div>
+    <label for="id_text2"></label><textarea name="text" id="id_text2" cols="85" rows="40"></textarea>
+
+</div>
+
+
+
+<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script>
+    var socket = io.connect('http://localhost:8080');
+    const textarea = document.getElementById('id_text1');
+    const outputDiv = document.getElementById('id_text2');
+
+
+    socket.on('on_word',(data)=>{
+        console.log('do');
+        outputDiv.value = data.text;
+        })
+
+
+    function get_text(){
+      socket.emit('word',textarea.value);
+}
+
+    </script>
+</body>
+</html>
